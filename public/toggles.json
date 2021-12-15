@@ -1,0 +1,36 @@
+{
+  "featureToggles": [
+      {
+          "id": "c2156d81-c1c5-40c1-9a4e-71ad794dcf1d",
+          "name": "sasdbasasb",
+          "enabled": true,
+          "startDate": "2021-12-12T12:12:12",
+          "endDate": "2021-12-12T12:12:12",
+          "type": "OPERATIONAL",
+          "condition": null
+      },
+      {
+          "id": "b29dbeda-b2ff-4dc8-8019-ce169c932f0d",
+          "name": "asdasdv",
+          "enabled": false,
+          "startDate": "2021-12-12T12:12:12",
+          "endDate": "2021-12-12T12:12:12",
+          "type": "OPERATIONAL",
+          "condition": {
+              "type": "EXPRESSION",
+              "language": "JAVA",
+              "parameters": {
+                  "parameters": [
+                      {
+                          "name": "12",
+                          "description": "12"
+                      }
+                  ]
+              },
+              "condition": {
+                  "body": "Integer.valueOf(\"12\") > 12"
+              }
+          }
+      }
+  ]
+}

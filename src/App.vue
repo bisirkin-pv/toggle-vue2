@@ -1,11 +1,31 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar
+      dense
+      fixed
+      app
+    >
+      <v-toolbar-title>
+        <RouterLink to="/"
+          class="text-decoration-none black--text"
+        >Toggles Feature</RouterLink>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+      <v-btn text to="/about">
+        About
+      </v-btn>
+      <v-btn color="primary">
+        <v-icon>mdi-account</v-icon>
+        Sing in
+      </v-btn>
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <router-view />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <style lang="scss">
@@ -13,7 +33,6 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

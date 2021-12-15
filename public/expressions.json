@@ -1,0 +1,18 @@
+{
+  "conditionEngines": [
+    {
+      "type": "EXPRESSION",
+      "language": "JAVA",
+      "description": {
+        "value": "Тестовое описание выражения"
+      }
+    },
+    {
+      "type": "SCRIPT",
+      "language": "JAVA",
+      "description": {
+        "value": "Тестовое описание скрипта"
+      }
+    }
+  ]
+}
