@@ -10,13 +10,11 @@
     </v-card-title>
     <v-card-text>
       <v-row>
-        <v-col
-          cols="12"
-          sm="4"
-        >
+        <v-col cols="12" sm="4">
           <v-autocomplete
             v-model="condition"
             :items="conditionEngines"
+            clearable
             deletable-chips
             dense
             item-text="type"
@@ -24,18 +22,15 @@
             label="Фильтр по типу"
             multiple
             small-chips
-            clearable
           >
           </v-autocomplete>
         </v-col>
-        <v-col
-          cols="12"
-          sm="8">
+        <v-col cols="12" sm="8">
           <v-text-field
             v-model.lazy="search"
+            clearable
             dense
             label="Фильтр по имени"
-            clearable
           ></v-text-field>
         </v-col>
       </v-row>
@@ -45,14 +40,11 @@
         @remove-toggle="removeToggle"
       ></toggle-list>
     </v-card-text>
-    <v-dialog
-      v-model="showCreateDialog"
-      width="50%"
-    >
+    <v-dialog v-model="showCreateDialog" width="50%">
       <toggle-edit-card
         :condition-engines="conditionEngines"
         :toggle="toggle"
-        @close="showCreateDialog=false"
+        @close="showCreateDialog = false"
         @save="saveToggle"
       ></toggle-edit-card>
     </v-dialog>
@@ -65,10 +57,10 @@ import ToggleEditCard from "@/components/ToggleEditCard";
 
 export default {
   name: "TogglesCard",
-  components: {ToggleList, ToggleEditCard},
+  components: { ToggleList, ToggleEditCard },
   data: () => ({
     featureToggles: [],
-    conditionEngines: [{type: 'OPERATIONAL'}, {type: 'TEST'}],
+    conditionEngines: [{type: "OPERATIONAL"}, {type: "TEST"}],
     condition: [],
     search: null,
     showCreateDialog: false,
@@ -81,41 +73,55 @@ export default {
       endDate: null,
       type: null,
       description: null,
-      condition: {}
-    }
+      condition: null,
+    },
   }),
   mounted() {
-    fetch('toggles.json')
-      .then((response) => response.json())
-      .then(json => this.featureToggles = json.featureToggles)
+    this.loadToggles();
   },
   computed: {
     filteredToggles() {
       if (this.condition.length > 0) {
         return this.featureToggles
-          .filter(el => this.condition.includes(el.type))
-          .filter(el => el.name.startsWith(this.search) || !this.search)
+          .filter((el) => this.condition.includes(el.type))
+          .filter((el) => el.name.startsWith(this.search) || !this.search);
       } else {
-        return this.featureToggles.filter(el => el.name.startsWith(this.search) || !this.search)
+        return this.featureToggles.filter(
+          (el) => el.name.startsWith(this.search) || !this.search
+        );
       }
-    }
+    },
   },
   methods: {
+    loadToggles(){
+      this.$axios("/api/v1/feature-toggles")
+        .then((response) => response.data)
+        .then((json) => (this.featureToggles = json.featureToggles));
+    },
     addToggle() {
-      this.toggle = JSON.parse(JSON.stringify(this.toggleDefault))
-      this.showCreateDialog = true
+      this.toggle = JSON.parse(JSON.stringify(this.toggleDefault));
+      this.showCreateDialog = true;
     },
     editToggleEvent(toggle) {
-      this.toggle = JSON.parse(JSON.stringify(toggle))
-      this.showCreateDialog = true
+      this.toggle = JSON.parse(JSON.stringify(toggle));
+      this.showCreateDialog = true;
     },
     removeToggle(toggle) {
-      console.log('removeToggle', toggle)
+      this.$axios.delete("/api/v1/feature-toggles/" + toggle.id, toggle,{
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error));
     },
-    saveToggle(toggle) {
-      console.log('saveToggle', toggle)
-      this.showCreateDialog = false
-    }
-  }
+    saveToggle: function (toggle) {
+      let _axios = toggle.id ? this.$axios.put : this.$axios.post;
+      _axios("/api/v1/feature-toggles", toggle, {
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        this.loadToggles();
+      });
+      this.showCreateDialog = false;
+    },
+  },
 };
 </script>

@@ -1,20 +1,14 @@
 <template>
   <v-app>
-    <v-app-bar
-      dense
-      fixed
-      app
-    >
+    <v-app-bar dense fixed app>
       <v-toolbar-title>
-        <RouterLink to="/"
-          class="text-decoration-none black--text"
-        >Toggles Feature</RouterLink>
+        <RouterLink to="/" class="text-decoration-none black--text"
+          >Toggles Feature</RouterLink
+        >
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn text to="/about">
-        About
-      </v-btn>
+      <v-btn text to="/about"> About </v-btn>
       <v-btn color="primary">
         <v-icon>mdi-account</v-icon>
         Sing in

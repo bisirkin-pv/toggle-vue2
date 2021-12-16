@@ -5,20 +5,18 @@
       <toggle-edit-form
         :toggle="editToggle"
         :condition-engines="conditionEngines"
-        @validate="v => this.valid = v"
+        @validate="(v) => (this.valid = v)"
       ></toggle-edit-form>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn
-        outlined
-        @click="$emit('close')"
-      >Закрыть</v-btn>
+      <v-btn outlined @click="$emit('close')">Закрыть</v-btn>
       <v-btn
         class="primary"
         @click="$emit('save', editToggle)"
         :disabled="!valid || !changed"
-      >Сохранить</v-btn>
+        >Сохранить</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -31,33 +29,31 @@ export default {
   components: { ToggleEditForm },
   props: {
     toggle: {
-      type: Object
+      type: Object,
     },
-    conditionEngines: Array
+    conditionEngines: Array,
   },
   data: () => ({
     valid: false,
-    editToggle: {}
+    editToggle: {},
   }),
   mounted() {
-    this.editToggle = JSON.parse(JSON.stringify(this.toggle))
+    this.editToggle = JSON.parse(JSON.stringify(this.toggle));
   },
   watch: {
     toggle: {
       deep: true,
-      handler(obj){
-        this.editToggle = JSON.parse(JSON.stringify(obj))
-      }
-    }
+      handler(obj) {
+        this.editToggle = JSON.parse(JSON.stringify(obj));
+      },
+    },
   },
-  computed:{
-    changed(){
-      return JSON.stringify(this.toggle) !== JSON.stringify(this.editToggle)
-    }
-  }
-}
+  computed: {
+    changed() {
+      return JSON.stringify(this.toggle) !== JSON.stringify(this.editToggle);
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

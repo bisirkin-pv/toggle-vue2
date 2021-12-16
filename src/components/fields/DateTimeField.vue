@@ -1,8 +1,6 @@
 <template>
   <div class="vue-datetime">
-    <label
-      :class="{'active': isActive}"
-    >{{ label }}</label>
+    <label :class="{ active: isActive }">{{ label }}</label>
     <vue-datetime
       :value="value"
       class="vue-datetime-input"
@@ -14,9 +12,8 @@
       v-if="isActive"
       class="vue-datetime-clear"
       @click.stop="$emit('update:value', null)"
-    >mdi-close
+      >mdi-close
     </v-icon>
-
   </div>
 </template>
 
@@ -26,17 +23,17 @@ export default {
   props: {
     label: {
       type: String,
-      default: ""
+      default: "",
     },
-    value: String
+    value: String,
   },
   data: () => ({}),
   computed: {
     isActive() {
-      return !!this.value
-    }
-  }
-}
+      return !!this.value;
+    },
+  },
+};
 </script>
 
 <style>

@@ -1,12 +1,7 @@
 <template>
-  <v-form
-    v-model="valid"
-    class="mt-3"
-  >
+  <v-form v-model="valid" class="mt-3">
     <v-row>
-      <v-col
-        cols="11"
-      >
+      <v-col cols="11">
         <v-text-field
           v-model="toggle.name"
           label="Название *"
@@ -15,32 +10,22 @@
           dense
         ></v-text-field>
       </v-col>
-      <v-col
-        cols="1"
-      >
+      <v-col cols="1">
         <v-switch v-model="toggle.enabled"></v-switch>
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-      >
+      <v-col cols="12" sm="6">
         <date-time-field
           label="Дата начала"
           :value.sync="toggle.startDate"
         ></date-time-field>
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-      >
+      <v-col cols="12" sm="6">
         <date-time-field
           label="Дата окончания"
           :value.sync="toggle.endDate"
         ></date-time-field>
       </v-col>
-      <v-col
-        cols="12"
-      >
+      <v-col cols="12">
         <v-text-field
           v-model="toggle.description"
           label="Описание"
@@ -48,9 +33,7 @@
           dense
         ></v-text-field>
       </v-col>
-      <v-col
-        cols="12"
-      >
+      <v-col cols="12">
         <v-autocomplete
           v-model="toggle.type"
           label="Тип *"
@@ -74,22 +57,20 @@ export default {
   components: { DateTimeField },
   props: {
     toggle: {
-      type: Object
+      type: Object,
     },
-    conditionEngines: Array
+    conditionEngines: Array,
   },
   data: () => ({
     valid: false,
-    requiredRule: [v => !!v || "Необходимо заполнить поле"]
+    requiredRule: [(v) => !!v || "Необходимо заполнить поле"],
   }),
   watch: {
     valid(v) {
-      this.$emit("validate", v)
-    }
-  }
-}
+      this.$emit("validate", v);
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
