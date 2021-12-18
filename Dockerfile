@@ -1,7 +1,7 @@
 FROM node:14 as build-stage
 # В эту переменную нужно передавать ulr backend'a
-ARG NUXT_ENV_API_URL
-ENV NUXT_ENV_API_URL ${NUXT_ENV_API_URL}
+ARG VUE_APP_BACKEND_URL
+ENV VUE_APP_BACKEND_URL ${VUE_APP_BACKEND_URL}
 
 WORKDIR /src
 

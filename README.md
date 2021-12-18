@@ -25,11 +25,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Build Docker
 ```
-export NUXT_ENV_API_URL=http://localhost:8088
-docker build --build-arg NUXT_ENV_API_URL=$NUXT_ENV_API_URL -t toggle-vue2:0.1.0 .
+export VUE_APP_BACKEND_URL=http://localhost:8080
+docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -t paveldriver0/toggle-vue2:0.2.0 .
 ```
 
 ### Run Docker
 ```
-docker run --rm -d -p 8080:8080 toggle-vue2:0.1.0
+docker run --rm -d -p 8081:8080 paveldriver0/toggle-vue2:0.2.0
 ```
