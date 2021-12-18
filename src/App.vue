@@ -19,8 +19,19 @@
         <router-view />
       </v-container>
     </v-main>
+    <the-snackbar></the-snackbar>
   </v-app>
 </template>
+
+<script>
+import TheSnackbar from "@/components/single/TheSnackbar";
+
+export default {
+  components: {
+    TheSnackbar,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

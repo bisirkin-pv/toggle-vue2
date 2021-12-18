@@ -77,7 +77,6 @@ export default {
       condition: null,
     },
   }),
-  mounted() {},
   created() {
     Promise.all([
       this.$api.ref.toggleTypes(),
@@ -132,25 +131,33 @@ export default {
       this.showCreateDialog = true;
     },
     removeToggle(toggle) {
-      this.$api.toggle.deleteToggle(toggle.id).then((response) => {
-        if (response.status === 200) {
-          this.featureToggles = this.featureToggles.filter(
-            (el) => el.id !== toggle.id
-          );
-        }
+      this.$api.toggle.deleteToggle(toggle.id).then(() => {
+        this.toggles = this.toggles.filter((el) => el.id !== toggle.id);
+        this.$notifier.showMessage({
+          content: `Toggle успешно удален`,
+          color: "success",
+        });
       });
     },
     saveToggle: function (toggle) {
       const action = !toggle.id ? "addToggle" : "updateToggle";
-      this.$api.toggle[action](toggle).then((response) => {
-        if (response.status === 200) {
-          this.loadToggles();
-        }
+      const msgAction = !toggle.id ? "создан" : "обновлен";
+      this.$api.toggle[action](toggle).then(() => {
+        this.loadToggles();
+        this.$notifier.showMessage({
+          content: `Toggle успешно ${msgAction}`,
+          color: "success",
+        });
       });
       this.showCreateDialog = false;
     },
     switchToggle(toggle) {
-      this.$api.toggle.updateToggle(toggle);
+      this.$api.toggle.updateToggle(toggle).then(() => {
+        this.$notifier.showMessage({
+          content: `Toggle успешно обновлен`,
+          color: "success",
+        });
+      });
     },
   },
 };
