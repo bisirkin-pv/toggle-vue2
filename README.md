@@ -28,10 +28,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Build Docker
 ```
 export VUE_APP_BACKEND_URL=http://localhost:8080
-docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -t paveldriver0/toggle-vue2:0.2.0 .
+docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -t paveldriver0/toggle-vue2:0.2.1 .
 ```
 
 ### Run Docker
 ```
-docker run --rm -d -p 8081:8080 paveldriver0/toggle-vue2:0.2.0
+docker run --rm -d -p 8081:8080 paveldriver0/toggle-vue2:0.2.1
 ```
