@@ -39,7 +39,7 @@
         @switch-toggle="switchToggle"
       ></toggle-list>
     </v-card-text>
-    <v-dialog v-model="showCreateDialog" width="50%">
+    <v-dialog v-model="showCreateDialog" width="50%" scrollable>
       <toggle-edit-card
         :condition-engines="conditionEngines"
         :feature-toggles-types="toggleTypes"
@@ -140,23 +140,31 @@ export default {
       });
     },
     saveToggle: function (toggle) {
-      const action = !toggle.id ? "addToggle" : "updateToggle";
+      const action = !toggle.id ? "addToggle" : "replaceToggle";
       const msgAction = !toggle.id ? "создан" : "обновлен";
       this.$api.toggle[action](toggle).then(() => {
         this.loadToggles();
         this.$notifier.showMessage({
-          content: `Toggle успешно ${msgAction}`,
+          content: `Toggle ${msgAction}`,
           color: "success",
         });
       });
       this.showCreateDialog = false;
     },
     switchToggle(toggle) {
-      this.$api.toggle.updateToggle(toggle).then(() => {
-        this.$notifier.showMessage({
-          content: `Toggle успешно обновлен`,
-          color: "success",
-        });
+      this.$api.toggle.switchToggle(toggle.id).then((response) => {
+        if (response.data.state === toggle.enabled) {
+          this.$notifier.showMessage({
+            content: `Toggle ${toggle.enabled ? "включен" : "выключен"}`,
+            color: "success",
+          });
+        } else {
+          toggle.enabled = response.data.state;
+          this.$notifier.showMessage({
+            content: `Toggle не изменен`,
+            color: "primary",
+          });
+        }
       });
     },
   },

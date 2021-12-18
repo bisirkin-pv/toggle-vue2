@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-text-field
         label="Имя параметра *"
-        :rules="requiredRule"
+        :rules="nameRule"
         v-model="parameter.name"
         clearable
         dense
@@ -18,6 +18,11 @@
         dense
       ></v-text-field>
     </v-col>
+    <v-col cols="12" offset="10">
+      <v-btn text outlined @click="$emit('remove', parameter.name)"
+        >Удалить</v-btn
+      >
+    </v-col>
   </v-row>
 </template>
 
@@ -26,10 +31,20 @@ export default {
   name: "ToggleConditionParamEditForm",
   props: {
     parameter: Object,
+    errorNameMessage: {
+      type: String,
+      default: null,
+    },
   },
-  data: () => ({
-    requiredRule: [(v) => !!v || "Необходимо заполнить поле"],
-  }),
+  data() {
+    return {
+      requiredRule: [(v) => !!v || "Необходимо заполнить поле"],
+      nameRule: [
+        (v) => !!v || "Необходимо заполнить поле",
+        (v) => !v || this.errorNameMessage || true,
+      ],
+    };
+  },
 };
 </script>
 

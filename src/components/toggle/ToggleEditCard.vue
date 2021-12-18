@@ -30,6 +30,7 @@
               v-if="editToggle.condition"
               :condition="editToggle.condition"
               :condition-engines="conditionEngines"
+              @validate="(v) => (this.validCondition = v)"
             ></toggle-condition-edit-form>
           </v-card>
         </v-col>
@@ -39,7 +40,9 @@
       <v-spacer></v-spacer>
       <v-btn outlined @click="$emit('close')">Закрыть</v-btn>
       <v-btn
-        :disabled="!valid || !changed"
+        :disabled="
+          !valid || !changed || (editToggle.condition && !validCondition)
+        "
         class="primary"
         @click="$emit('save', editToggle)"
         >Сохранить
@@ -65,6 +68,7 @@ export default {
   },
   data: () => ({
     valid: false,
+    validCondition: false,
     editToggle: {},
   }),
   mounted() {
