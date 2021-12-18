@@ -1,5 +1,7 @@
 # toggles_vue2
 
+MVP интерфейс для [Feature Toggles server](https://github.com/ezhov-da/feature-toggles)
+
 ## Project setup
 ```
 npm install

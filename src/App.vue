@@ -3,7 +3,7 @@
     <v-app-bar dense fixed app>
       <v-toolbar-title>
         <RouterLink to="/" class="text-decoration-none black--text"
-          >Toggles Feature</RouterLink
+          >Feature Toggles</RouterLink
         >
       </v-toolbar-title>
 
