@@ -25,13 +25,13 @@
     ></toggle-condition-param-edit-form>
     <v-row>
       <v-col cols="12">
-        <v-text-field
+        <v-textarea
           v-model="condition.condition.body"
           clearable
           dense
           label="Условие, написанное на выбранном языке"
         >
-        </v-text-field>
+        </v-textarea>
       </v-col>
     </v-row>
   </v-card-text>

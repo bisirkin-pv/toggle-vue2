@@ -26,13 +26,13 @@
         ></date-time-field>
       </v-col>
       <v-col cols="12">
-        <v-text-field
+        <v-textarea
           v-model="toggle.description"
           label="Описание *"
           :rules="requiredRule"
           clearable
           dense
-        ></v-text-field>
+        ></v-textarea>
       </v-col>
       <v-col cols="12">
         <v-autocomplete
