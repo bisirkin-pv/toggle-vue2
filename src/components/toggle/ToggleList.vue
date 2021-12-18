@@ -14,7 +14,10 @@
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-switch v-model="toggle.enabled" @click.stop></v-switch>
+            <v-switch
+              v-model="toggle.enabled"
+              @click.stop="switchToggleClick(toggle)"
+            ></v-switch>
           </v-list-item-action>
         </v-list-item>
       </v-expansion-panel-header>
@@ -52,9 +55,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn outlined @click="showConfirmDelete = false">Нет</v-btn>
-          <v-btn color="error" @click="deleteToggleClick"
-            >Да</v-btn
-          >
+          <v-btn color="error" @click="deleteToggleClick">Да</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -62,7 +63,7 @@
 </template>
 
 <script>
-import ToggleConditionCard from "@/components/ToggleConditionCard";
+import ToggleConditionCard from "@/components/toggle/ToggleConditionCard";
 
 export default {
   name: "ToggleList",
@@ -85,10 +86,13 @@ export default {
       this.currentToggle = toggle;
       this.showConfirmDelete = true;
     },
-    deleteToggleClick(){
-      this.$emit('remove-toggle', this.currentToggle);
+    deleteToggleClick() {
+      this.$emit("remove-toggle", this.currentToggle);
       this.showConfirmDelete = false;
-    }
+    },
+    switchToggleClick(toggle) {
+      this.$emit("switch-toggle", toggle);
+    },
   },
 };
 </script>

@@ -28,7 +28,8 @@
       <v-col cols="12">
         <v-text-field
           v-model="toggle.description"
-          label="Описание"
+          label="Описание *"
+          :rules="requiredRule"
           clearable
           dense
         ></v-text-field>
@@ -37,7 +38,7 @@
         <v-autocomplete
           v-model="toggle.type"
           label="Тип *"
-          :items="conditionEngines"
+          :items="featureTogglesTypes"
           item-text="type"
           item-value="type"
           :rules="requiredRule"
@@ -60,6 +61,7 @@ export default {
       type: Object,
     },
     conditionEngines: Array,
+    featureTogglesTypes: Array,
   },
   data: () => ({
     valid: false,

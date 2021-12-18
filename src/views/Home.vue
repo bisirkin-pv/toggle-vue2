@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import TogglesCard from "@/components/TogglesCard.vue";
+import TogglesCard from "@/components/toggle/TogglesCard.vue";
 
 export default {
   name: "Home",

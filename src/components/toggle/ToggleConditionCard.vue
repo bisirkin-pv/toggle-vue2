@@ -7,7 +7,10 @@
     </v-card-title>
     <v-card-text>
       <ul>
-        <li><strong>Тип и язык: </strong>{{ condition.language }}</li>
+        <li>
+          <strong>Тип и язык: </strong>{{ condition.type }}
+          {{ condition.language }}
+        </li>
         <ul>
           <li
             v-for="param of condition.parameters.parameters"
