@@ -9,7 +9,7 @@
 
       <v-spacer></v-spacer>
       <v-btn text to="/about"> About </v-btn>
-      <v-btn color="primary">
+      <v-btn color="primary" v-if="false">
         <v-icon>mdi-account</v-icon>
         Sing in
       </v-btn>

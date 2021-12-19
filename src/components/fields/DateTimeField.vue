@@ -6,6 +6,8 @@
       class="vue-datetime-input"
       format="yyyy-MM-dd HH:mm:ss"
       type="datetime"
+      :min-datetime="minDatetime"
+      :max-datetime="maxDatetime"
       @input="$emit('update:value', $event)"
     ></vue-datetime>
     <v-icon
@@ -26,6 +28,8 @@ export default {
       default: "",
     },
     value: String,
+    minDatetime: String,
+    maxDatetime: String,
   },
   data: () => ({}),
   computed: {

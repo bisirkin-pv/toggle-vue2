@@ -24,9 +24,9 @@
       <v-expansion-panel-content>
         <v-card flat>
           <v-card-text class="pt-0">
-            <p v-if="toggle.description">
-              {{ toggle.description }}
-            </p>
+            <pre v-if="toggle.description" class="mb-3">{{
+              toggle.description
+            }}</pre>
             <toggle-condition-card
               v-if="toggle.condition"
               :condition="toggle.condition"

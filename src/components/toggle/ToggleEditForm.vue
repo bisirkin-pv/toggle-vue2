@@ -17,12 +17,14 @@
         <date-time-field
           label="Дата начала"
           :value.sync="toggle.startDate"
+          :max-datetime="toggle.endDate"
         ></date-time-field>
       </v-col>
       <v-col cols="12" sm="6">
         <date-time-field
           label="Дата окончания"
           :value.sync="toggle.endDate"
+          :min-datetime="toggle.startDate"
         ></date-time-field>
       </v-col>
       <v-col cols="12">

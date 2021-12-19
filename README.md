@@ -1,6 +1,8 @@
-# toggles_vue2
+# toggles_vue2 (current v0.2.3)
 
 MVP интерфейс для [Feature Toggles server](https://github.com/ezhov-da/feature-toggles)
+
+[CHANGELOG](https://github.com/bisirkin-pv/toggle-vue2/blob/master/changelog.md)
 
 ## Project setup
 ```
@@ -28,10 +30,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Build Docker
 ```
 export VUE_APP_BACKEND_URL=http://localhost:8080
-docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -t paveldriver0/toggle-vue2:0.2.2 .
+docker build --build-arg VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL -t paveldriver0/toggle-vue2:0.2.3 .
 ```
 
 ### Run Docker
 ```
-docker run --rm -d -p 8081:8080 paveldriver0/toggle-vue2:0.2.2
+docker run --rm -d -p 8081:8080 paveldriver0/toggle-vue2:0.2.3
 ```

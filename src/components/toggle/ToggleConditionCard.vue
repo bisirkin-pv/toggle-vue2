@@ -15,7 +15,10 @@
             <strong>{{ param.name }}: </strong>{{ param.description }}
           </li>
         </ul>
-        <li><strong>Условие: </strong>{{ condition.condition.body }}</li>
+        <li>
+          <strong>Условие: </strong>
+          <pre>{{ condition.condition.body }}</pre>
+        </li>
       </ul>
     </v-card-text>
   </v-card>

@@ -3,9 +3,13 @@
     <v-card-title>
       Toggles
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="addToggle">
+      <v-btn color="primary" class="mr-3" @click="addToggle">
         <v-icon left>mdi-plus</v-icon>
         Создать
+      </v-btn>
+      <v-btn outlined color="primary" @click="loadToggles">
+        <v-icon left>mdi-refresh</v-icon>
+        Обновить
       </v-btn>
     </v-card-title>
     <v-card-text>
@@ -101,14 +105,14 @@ export default {
           .filter((el) => this.searchToggleTypes.includes(el.type))
           .filter(
             (el) =>
-              el.name
+              (el.name + "")
                 .toLowerCase()
                 .startsWith((this.search || "").toLowerCase()) || !this.search
           );
       } else {
         return this.toggles.filter(
           (el) =>
-            el.name
+            (el.name + "")
               .toLowerCase()
               .startsWith((this.search || "").toLowerCase()) || !this.search
         );
@@ -131,41 +135,80 @@ export default {
       this.showCreateDialog = true;
     },
     removeToggle(toggle) {
-      this.$api.toggle.deleteToggle(toggle.id).then(() => {
-        this.toggles = this.toggles.filter((el) => el.id !== toggle.id);
-        this.$notifier.showMessage({
-          content: `Toggle успешно удален`,
-          color: "success",
+      this.$api.toggle
+        .deleteToggle(toggle.id)
+        .then(() => {
+          this.toggles = this.toggles.filter((el) => el.id !== toggle.id);
+          this.$notifier.showMessage({
+            content: `Toggle "${toggle.name}" удален`,
+            color: "success",
+          });
+        })
+        .catch((e) => {
+          this.$notifier.showMessage({
+            content: e.response.data.message,
+            color: "error",
+          });
         });
-      });
     },
     saveToggle: function (toggle) {
       const action = !toggle.id ? "addToggle" : "replaceToggle";
       const msgAction = !toggle.id ? "создан" : "обновлен";
-      this.$api.toggle[action](toggle).then(() => {
-        this.loadToggles();
-        this.$notifier.showMessage({
-          content: `Toggle ${msgAction}`,
-          color: "success",
-        });
-      });
-      this.showCreateDialog = false;
-    },
-    switchToggle(toggle) {
-      this.$api.toggle.switchToggle(toggle.id).then((response) => {
-        if (response.data.state === toggle.enabled) {
+      this.$api.toggle[action](toggle)
+        .then((response) => {
+          if (!toggle.id) {
+            toggle.id = response.data.id;
+            this.toggles.push(JSON.parse(JSON.stringify(toggle)));
+          } else {
+            const idx = this.toggles.findIndex((el) => el.id === toggle.id);
+            if (idx >= 0) {
+              Object.keys(this.toggles[idx]).forEach((key) => {
+                this.toggles[idx][key] = JSON.parse(
+                  JSON.stringify(toggle[key])
+                );
+              });
+            }
+          }
           this.$notifier.showMessage({
-            content: `Toggle ${toggle.enabled ? "включен" : "выключен"}`,
+            content: `Toggle "${toggle.name}" ${msgAction}`,
             color: "success",
           });
-        } else {
-          toggle.enabled = response.data.state;
+        })
+        .catch((e) => {
           this.$notifier.showMessage({
-            content: `Toggle не изменен`,
-            color: "primary",
+            content: e.response.data.message,
+            color: "error",
           });
-        }
-      });
+        })
+        .finally(() => {
+          this.showCreateDialog = false;
+        });
+    },
+    switchToggle(toggle) {
+      this.$api.toggle
+        .switchToggle(toggle.id)
+        .then((response) => {
+          if (response.data.state === toggle.enabled) {
+            this.$notifier.showMessage({
+              content: `Toggle "${toggle.name}" ${
+                toggle.enabled ? "включен" : "выключен"
+              }`,
+              color: "success",
+            });
+          } else {
+            toggle.enabled = response.data.state;
+            this.$notifier.showMessage({
+              content: `Toggle не изменен`,
+              color: "primary",
+            });
+          }
+        })
+        .catch((e) => {
+          this.$notifier.showMessage({
+            content: e.response.data.message,
+            color: "error",
+          });
+        });
     },
   },
 };
