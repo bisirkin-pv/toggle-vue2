@@ -1,11 +1,12 @@
 <template>
   <v-card-text>
-    <v-form v-model="valid" class="mt-3">
+    <v-form ref="toggle_condition_form" v-model="valid" class="mt-3">
       <v-row>
         <v-col cols="12">
           <v-autocomplete
             :items="conditionEngines"
             :rules="requiredRule"
+            v-model="condition.id"
             item-text="name"
             item-value="id"
             label="Тип и язык условия *"
@@ -31,15 +32,34 @@
         @remove="removeParameter"
       ></toggle-condition-param-edit-form>
       <v-row>
-        <v-col cols="12">
+        <v-col cols="11">
           <v-textarea
             v-model="condition.condition.body"
             :rules="requiredRule"
+            :error-messages="conditionValidateErrorMessage"
             clearable
             dense
             label="Условие, написанное на выбранном языке *"
+            @input="inputCondition"
+            :messages="conditionValidateSuccessMessage"
           >
           </v-textarea>
+        </v-col>
+        <v-col cols="1">
+          <v-btn icon :color="validateColor">
+            <v-icon>{{
+              conditionValid ? "mdi-check-decagram" : "mdi-alert-decagram"
+            }}</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="3" offset="9">
+          <v-btn
+            block
+            color="primary"
+            @click="validateCondition"
+            :disabled="!condition.condition.body || !condition.type"
+            >Проверить</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
@@ -56,10 +76,13 @@ export default {
     conditionEngines: Array,
     condition: Object,
   },
-  data: () => ({
-    valid: true,
-    requiredRule: [(v) => !!v || "Необходимо заполнить поле"],
-  }),
+  data() {
+    return {
+      valid: true,
+      requiredRule: [(v) => !!v || "Необходимо заполнить поле"],
+      conditionRule: [(v) => !!v || "Необходимо заполнить поле"],
+    };
+  },
   computed: {
     disabledAddParameter() {
       return (
@@ -80,10 +103,33 @@ export default {
         ? "Введите уникальное имя"
         : null;
     },
+    conditionValidateErrorMessage() {
+      return !this.condition.condition.error
+        ? ""
+        : this.condition.condition.error;
+    },
+    conditionValidateSuccessMessage() {
+      return this.condition.condition?.result?.time
+        ? `Время выполнения: ${this.condition.condition?.result?.time}, Результат: ${this.condition.condition?.result?.result}`
+        : null;
+    },
+    conditionValid() {
+      return !!this.condition.condition.result;
+    },
+    validateColor() {
+      return this.conditionValid
+        ? "success"
+        : !this.condition.condition.error
+        ? "primary"
+        : "error";
+    },
   },
   watch: {
     valid(v) {
-      this.$emit("validate", v);
+      this.$emit("validate", v && this.conditionValid);
+    },
+    conditionValid(v) {
+      this.$emit("validate", v && this.valid);
     },
   },
   methods: {
@@ -94,6 +140,7 @@ export default {
       });
     },
     changeType(value) {
+      this.condition.id = value.id;
       this.condition.type = value.type;
       this.condition.language = value.language;
     },
@@ -102,6 +149,17 @@ export default {
         this.condition.parameters.inputParameters.filter(
           (el) => el.name !== name
         );
+    },
+    validateCondition() {
+      this.$emit("check-condition", this.condition);
+    },
+    inputCondition() {
+      if (this.condition.condition.error) {
+        this.condition.condition.error = null;
+      }
+      if (this.condition.condition.result) {
+        this.condition.condition.result = null;
+      }
     },
   },
 };

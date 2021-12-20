@@ -15,5 +15,8 @@ export default function (instance) {
     deleteToggle(payload) {
       return instance.delete(`api/v1/feature-toggles/${payload}`);
     },
+    checkCondition(payload) {
+      return instance.post("/api/v1/condition-checker", payload);
+    },
   };
 }

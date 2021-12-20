@@ -31,6 +31,7 @@
               :condition="editToggle.condition"
               :condition-engines="conditionEngines"
               @validate="(v) => (this.validCondition = v)"
+              @check-condition="checkCondition"
             ></toggle-condition-edit-form>
           </v-card>
         </v-col>
@@ -102,6 +103,22 @@ export default {
     },
     deleteCondition() {
       this.editToggle.condition = null;
+    },
+    checkCondition(condition) {
+      this.$api.toggle
+        .checkCondition(condition)
+        .then((response) => {
+          Vue.set(this.editToggle.condition.condition, "error", null);
+          Vue.set(this.editToggle.condition.condition, "result", response.data);
+        })
+        .catch((error) => {
+          console.error(error.response.data.message);
+          Vue.set(
+            this.editToggle.condition.condition,
+            "error",
+            "Ошибка валидации"
+          );
+        });
     },
   },
 };

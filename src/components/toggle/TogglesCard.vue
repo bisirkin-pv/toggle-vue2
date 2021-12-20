@@ -92,7 +92,7 @@ export default {
       const data =
         response[1].status === 200 ? response[1].data.conditionEngines : [];
       this.conditionEngines = data.map((el, idx) => {
-        return { id: idx, name: `${el.type} ${el.language}`, ...el };
+        return { id: idx + 1, name: `${el.type} ${el.language}`, ...el };
       });
       this.toggles =
         response[2].status === 200 ? response[2].data.featureToggles : [];
@@ -131,6 +131,14 @@ export default {
       this.showCreateDialog = true;
     },
     editToggleEvent(toggle) {
+      if (toggle.condition) {
+        const cond = this.conditionEngines.find(
+          (el) =>
+            el.name === `${toggle.condition.type} ${toggle.condition.language}`
+        );
+        toggle.condition.id = cond.id;
+        toggle.condition.name = cond.name;
+      }
       this.toggle = JSON.parse(JSON.stringify(toggle));
       this.showCreateDialog = true;
     },
