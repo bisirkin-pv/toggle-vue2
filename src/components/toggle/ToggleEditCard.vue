@@ -116,7 +116,7 @@ export default {
           Vue.set(
             this.editToggle.condition.condition,
             "error",
-            "Ошибка валидации"
+            error.response.data.message
           );
         });
     },
