@@ -1,23 +1,29 @@
 <template>
   <v-card>
-    <v-card-title>Описание условия <v-spacer></v-spacer> </v-card-title>
+    <v-card-title
+      >Описание условия <v-spacer></v-spacer>
+      <toggle-run-button :toggle="toggle"></toggle-run-button
+    ></v-card-title>
     <v-card-text>
       <ul>
         <li>
-          <strong>Тип и язык: </strong>{{ condition.type }}
-          {{ condition.language }}
+          <strong>Тип и язык: </strong>{{ toggle.condition.type }}
+          {{ toggle.condition.language }}
         </li>
-        <ul>
-          <li
-            v-for="param of condition.parameters.inputParameters"
-            :key="param.name"
-          >
-            <strong>{{ param.name }}: </strong>{{ param.description }}
-          </li>
+        <li>Параметры:</li>
+        <ul
+          v-for="param of toggle.condition.parameters.inputParameters"
+          :key="param.name"
+        >
+          <li><strong>Имя: </strong>{{ param.name }}</li>
+          <ul>
+            <li><strong>Тестовое значение: </strong>{{ param.value }}</li>
+            <li><strong>Описание: </strong>{{ param.description }}</li>
+          </ul>
         </ul>
         <li>
           <strong>Условие: </strong>
-          <pre>{{ condition.condition.body }}</pre>
+          <pre>{{ toggle.condition.condition.body }}</pre>
         </li>
       </ul>
     </v-card-text>
@@ -25,10 +31,13 @@
 </template>
 
 <script>
+import ToggleRunButton from "@/components/toggle/ToggleRunButton";
+
 export default {
   name: "ToggleConditionCard",
+  components: { ToggleRunButton },
   props: {
-    condition: Object,
+    toggle: Object,
   },
 };
 </script>

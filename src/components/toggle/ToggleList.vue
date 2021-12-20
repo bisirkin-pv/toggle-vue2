@@ -29,7 +29,7 @@
             }}</pre>
             <toggle-condition-card
               v-if="toggle.condition"
-              :condition="toggle.condition"
+              :toggle="toggle"
             ></toggle-condition-card>
           </v-card-text>
           <v-card-actions>

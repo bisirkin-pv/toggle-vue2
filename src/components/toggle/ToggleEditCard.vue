@@ -112,7 +112,6 @@ export default {
           Vue.set(this.editToggle.condition.condition, "result", response.data);
         })
         .catch((error) => {
-          console.error(error.response.data.message);
           Vue.set(
             this.editToggle.condition.condition,
             "error",

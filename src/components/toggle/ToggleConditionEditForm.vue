@@ -151,6 +151,7 @@ export default {
         );
     },
     validateCondition() {
+      this.inputCondition();
       this.$emit("check-condition", this.condition);
     },
     inputCondition() {

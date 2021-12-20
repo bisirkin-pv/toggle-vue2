@@ -1,10 +1,19 @@
 <template>
   <v-row class="toggle-condition-param-form">
-    <v-col cols="12">
+    <v-col cols="12" sm="6">
       <v-text-field
         label="Имя параметра *"
         :rules="nameRule"
         v-model="parameter.name"
+        clearable
+        dense
+      ></v-text-field>
+    </v-col>
+    <v-col cols="12" sm="6">
+      <v-text-field
+        label="Тестовое значение *"
+        :rules="nameRule"
+        v-model="parameter.value"
         clearable
         dense
       ></v-text-field>
