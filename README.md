@@ -1,6 +1,7 @@
 # toggles_vue2 (current v0.3.0)
 
-MVP интерфейс для [Feature Toggles server](https://github.com/ezhov-da/feature-toggles)
+## ВАЖНО. Проект перенесён. 
+**Новый адрес https://github.com/togglefeature/feature-toggle**
 
 [CHANGELOG](https://github.com/bisirkin-pv/toggle-vue2/blob/master/changelog.md)
 
